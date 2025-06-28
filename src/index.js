@@ -28,6 +28,9 @@ app.use(require('./routes'));
 // Public
 app.use(express.static(path.join(__dirname, 'public')));
 
+const errorHandler = require("./middlewares/errorHandler");
+app.use(errorHandler);
+
 // Iniciar el servidor
 httpServer.listen(app.get('port'), () => {
     console.log(`Servidor corriendo en http://localhost:${app.get('port')}`);

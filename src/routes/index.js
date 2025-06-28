@@ -8,15 +8,24 @@ const views = path.join(__dirname, "/../views");
 // Importamos el middleware isLoggedIn para verificar si el usuario está autenticado
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
-// Definimos las rutas para servir los archivos HTML
 // Ruta para la página principal, protegida por el middleware isLoggedIn
-router.get("/", isLoggedIn, (req, res) => {
-  res.sendFile(views + "/index.html");
+router.get("/", isLoggedIn, async (req, res, next) => {
+  try {
+    res.sendFile(views + "/index.html");
+  } catch (error) {
+    // Si ocurre un error, lo pasamos al middleware de manejo de errores
+    next(error);
+  }
 });
 
 // Ruta para la página de registro, no protegida por el middleware
-router.get("/register", (req, res) => {
-  res.sendFile(views + "/register.html");
+router.get("/register", async (req, res, next) => {
+  try {
+    res.sendFile(views + "/register.html");
+  } catch (error) {
+    // Si ocurre un error, lo pasamos al middleware de manejo de errores
+    next(error);
+  }
 });
 
 module.exports = router;
